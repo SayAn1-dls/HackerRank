@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+*.pyo
+.Python
+*.so
+venv/
+.env
+.env.*
+*.egg-info/
+dist/
+triage_output.csv
+**/triage_*.csv

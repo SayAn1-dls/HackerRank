@@ -1,0 +1,3 @@
+ticket_id,company,subject,description
+T-DEMO-1,Acme,Password reset,"I can't log in. I need to reset my password — what is the process?"
+T-DEMO-2,,Rate limits,"Getting 429 errors on the API around 70 requests per minute."

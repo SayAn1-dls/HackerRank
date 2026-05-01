@@ -1,0 +1,65 @@
+[
+  {
+    "id": "faq-login-reset",
+    "title": "Resetting your password",
+    "product_area": "authentication",
+    "keywords": ["password", "reset", "login", "sign in", "forgot", "email link"],
+    "body": "Use the Forgot password link on the sign-in page. Enter your account email; you will receive a reset link that expires in one hour. If no email arrives, check spam folders and confirm the email address on file. Do not share reset links with anyone."
+  },
+  {
+    "id": "faq-2fa-backup",
+    "title": "Two-factor authentication backup codes",
+    "product_area": "authentication",
+    "keywords": ["2fa", "mfa", "two factor", "authenticator", "backup codes"],
+    "body": "In Account security settings you can view or regenerate backup codes. Store codes offline. If you lose your device and codes, use account recovery by contacting support with verified account details; recovery may take additional verification steps."
+  },
+  {
+    "id": "faq-export-csv",
+    "title": "Exporting data to CSV",
+    "product_area": "data_export",
+    "keywords": ["export", "csv", "download", "report", "data", "reports", "usage"],
+    "body": "Open Reports, choose the date range, then Export as CSV. Large exports may take several minutes; you will receive an in-app notification when the file is ready. Exports include only data your role is permitted to view."
+  },
+  {
+    "id": "faq-api-rate-limits",
+    "title": "API rate limits and errors",
+    "product_area": "api",
+    "keywords": ["api", "429", "rate limit", "throttle", "webhook"],
+    "body": "Standard tier allows 60 requests per minute per API key. HTTP 429 means you exceeded the limit; back off with exponential retry. Verify you send the API key header documented in the developer portal. Webhook retries follow the schedule shown in webhook settings."
+  },
+  {
+    "id": "faq-dashboard-widgets",
+    "title": "Dashboard widgets not loading",
+    "product_area": "dashboard",
+    "keywords": ["dashboard", "widget", "loading", "blank", "spinning"],
+    "body": "Clear browser cache and hard refresh. Confirm your role has access to the datasets powering the widget. If a specific widget shows an error code, note the code and time in UTC; support uses that for correlation."
+  },
+  {
+    "id": "faq-plans-overview",
+    "title": "Plans and feature availability",
+    "product_area": "billing",
+    "keywords": ["plan", "tier", "feature", "upgrade", "limit"],
+    "body": "The Plans page lists features included in each tier. Some capabilities require Enterprise; your admin can request a change through the billing contact on the account. Usage limits reset according to your billing cycle shown on the subscription page."
+  },
+  {
+    "id": "policy-escalation-notice",
+    "title": "When tickets are escalated",
+    "product_area": "general",
+    "keywords": ["escalate", "specialist", "review", "security", "billing"],
+    "body": "Certain topics require a human specialist: suspected fraud, payment or invoice disputes, account access recovery after possible compromise, and reported security vulnerabilities. Automated replies do not confirm billing outcomes or reset privileged access."
+  },
+  {
+    "id": "faq-webhook-delivery",
+    "title": "Webhook delivery failures",
+    "product_area": "api",
+    "keywords": ["webhook", "delivery", "failed", "retry", "signature"],
+    "body": "Check the webhook delivery log for HTTP status and response time. Endpoints must return 2xx within 10 seconds. Verify the signing secret matches your server configuration. After repeated failures, deliveries pause until you re-enable the endpoint in settings."
+  },
+  {
+    "id": "faq-general-contact",
+    "title": "How to get help",
+    "product_area": "general",
+    "keywords": ["help", "support", "contact", "hours"],
+    "body": "Use this support channel for product questions. Include steps to reproduce, timestamps in UTC, and screenshots when possible. Response times depend on plan level; critical production outages should use the priority path described in your contract if applicable."
+  }
+]

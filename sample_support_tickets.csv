@@ -1,0 +1,11 @@
+ticket_id,company,subject,description
+T-001,Acme SaaS,Export report,"I need to download last month's usage as CSV from Reports. Where do I click?"
+T-002,,API errors,"Our integration gets HTTP 429 from the REST API every few minutes. We send about 100 req/min."
+T-003,Globex Corp,Refund concern,"I was double charged on invoice INV-9921. I need a refund for the duplicate payment."
+T-004,Initech,Dashboard blank,"The main dashboard widgets spin forever. Chrome latest. Started this morning."
+T-005,Unknown,Feature idea,"It would be great if you added dark mode to the portal. Not urgent."
+T-006,Foo LLC,Login help,"I forgot my password and the reset email never arrives. I checked spam."
+T-007,Bar Inc,Possible fraud,"Someone used my card on your site. I did not authorize this charge. Please investigate."
+T-008,Spam,,unsubscribe marketing
+T-009,MultiCorp,Two problems,"1) Webhook deliveries fail with timeout. 2) Also please add SAML SSO next quarter."
+T-010,DevShop,Webhook signature,"Webhook endpoint returns 200 but we see signature mismatch in logs. Using Node."
