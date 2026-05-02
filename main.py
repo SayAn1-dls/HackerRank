@@ -25,6 +25,46 @@ def _setup_logging(verbose: bool) -> None:
     )
 
 
+def _summarize_ticket(
+    *,
+    ticket_id: str,
+    decision_status: str,
+    risk_labels: str,
+    risk_level: str,
+    request_type: str,
+    product_area: str,
+    corpus_score: float,
+    confidence: float,
+    justification: str,
+    multi_issue: bool,
+) -> None:
+    """Print one readable block per ticket (stdout) so runners see escalate/risk context."""
+    esc = "YES — escalated (human/agent follow-up)" if decision_status == "escalated" else "NO — auto reply allowed"
+    flags = []
+    if multi_issue:
+        flags.append("multi_issue")
+    if risk_labels != "none":
+        flags.append("sensitive_topic")
+    flag_s = f" flags=[{','.join(flags)}]" if flags else ""
+    j = justification.replace("\n", " ").strip()
+    if len(j) > 200:
+        j = j[:197] + "..."
+    print(
+        f"\n── Ticket {ticket_id} ────────────────────────────────────────\n"
+        f"  Status:       {decision_status.upper()}\n"
+        f"  Escalate?     {esc}{flag_s}\n"
+        f"  Risk tags:    {risk_labels}\n"
+        f"  Risk level:   {risk_level}\n"
+        f"  Request type: {request_type}\n"
+        f"  Product area: {product_area}\n"
+        f"  Corpus match score: {corpus_score:.2f}\n"
+        f"  Confidence:   {confidence:.3f}\n"
+        f"  Why:          {j}\n",
+        file=sys.stdout,
+        flush=True,
+    )
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         description="Triage support tickets from CSV; outputs structured CSV (corpus-grounded)."
@@ -51,6 +91,12 @@ def main(argv: list[str] | None = None) -> int:
         help="Override path to support_corpus.json",
     )
     parser.add_argument("-v", "--verbose", action="store_true", help="Debug logging")
+    parser.add_argument(
+        "-q",
+        "--quiet",
+        action="store_true",
+        help="Do not print per-ticket summary to stdout (CSV only; logs still INFO unless -v)",
+    )
     args = parser.parse_args(argv)
 
     _setup_logging(args.verbose)
@@ -75,6 +121,9 @@ def main(argv: list[str] | None = None) -> int:
     ]
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
+    if not args.quiet:
+        print("----- Per-ticket summary (stderr = logs above) -----", flush=True)
+
     with args.output.open("w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
@@ -111,8 +160,26 @@ def main(argv: list[str] | None = None) -> int:
                     "confidence_score": f"{decision.confidence:.3f}",
                 }
             )
+            if not args.quiet:
+                risk_csv = ",".join(sorted(r.value for r in clf.risk_categories)) or "none"
+                _summarize_ticket(
+                    ticket_id=ticket.ticket_id,
+                    decision_status=decision.status,
+                    risk_labels=risk_csv,
+                    risk_level=clf.risk_level,
+                    request_type=clf.request_type.value,
+                    product_area=clf.product_area,
+                    corpus_score=retr.max_score,
+                    confidence=decision.confidence,
+                    justification=justification,
+                    multi_issue=clf.multi_issue,
+                )
 
-    log.info("Wrote %d row(s) to %s", len(tickets), args.output)
+    log.info(
+        "Done. Wrote %d row(s) to %s (full response text is in that CSV column).",
+        len(tickets),
+        args.output,
+    )
     return 0
 
 
