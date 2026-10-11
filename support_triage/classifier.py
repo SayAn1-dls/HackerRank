@@ -100,8 +100,13 @@ def _split_issues(text: str) -> list[str]:
     chunks = [p.strip() for p in parts if p and len(p.strip()) > 10]
     if len(chunks) >= 2:
         return chunks
-    # Inline numbered lists: "1) foo 2) bar" on one line
-    numbered_inline = [p.strip() for p in re.split(r"\b\d+[\.)]\s*", text) if p.strip()]
+    # Inline numbered lists: "1) foo 2) bar" on one line. Require the marker to be
+    # followed by whitespace and not be part of a decimal (e.g. "version 2.0").
+    numbered_inline = [
+        p.strip()
+        for p in re.split(r"(?<![\d.])\b\d+[\.)](?=\s)", text)
+        if p.strip()
+    ]
     if len(numbered_inline) >= 2:
         return [n for n in numbered_inline if len(n) > 8]
     numbered = re.findall(r"(?:^|\n)\s*\d+[\.)]\s*([^\n]+)", text, re.M)
